@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         listView=findViewById(R.id.listView);
 
+
     }
 
     //AsyncTask class created to manipulate the process in background --------
@@ -68,8 +69,14 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
 
-
-
+        @Override
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+            MyAdapter myAdapter=new MyAdapter(MainActivity.this,itemjsonArray);
+            listView.setAdapter(myAdapter);
+            if(dialog.isShowing())
+                dialog.dismiss();
+        }
 
 
     }

@@ -9,6 +9,11 @@ import android.widget.ListView;
 
 import org.json.JSONArray;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -35,10 +40,41 @@ public class MainActivity extends AppCompatActivity {
             dialog.show();
         }
 
+
         @Override
-        protected Object doInBackground(Object[] objects) {
+        protected Object doInBackground(Object[] objects)
+        {
+            StringBuffer responce=new StringBuffer();
+
+            try
+            {
+                URL url = new URL(MyUtil.USER_URL);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                InputStreamReader ir = new InputStreamReader(urlConnection.getInputStream());
+                BufferedReader br = new BufferedReader(ir);
+                String inputLine = null;
+                while ((inputLine = br.readLine()) != null)
+                {
+                    responce.append(inputLine);
+                }
+                br.close();
+                ir.close();
+                itemjsonArray = new JSONArray(responce.toString());
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
             return null;
         }
+
+
+
+
+
+
+
+
     }
 
 

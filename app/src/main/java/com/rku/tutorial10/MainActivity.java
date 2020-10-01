@@ -5,14 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.UnknownHostException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        listView=findViewById(R.id.listView);
+        listView = findViewById(R.id.listView);
 
         new MyAsyncTask().execute();
 
@@ -63,9 +69,16 @@ public class MainActivity extends AppCompatActivity {
                 ir.close();
                 itemjsonArray = new JSONArray(responce.toString());
             }
+            catch (UnknownHostException e)
+            {
+                if(dialog.isShowing())
+                    dialog.dismiss();
+                cancel(true);
+            }
             catch (Exception e)
             {
                 e.printStackTrace();
+
             }
             return null;
         }
@@ -77,11 +90,17 @@ public class MainActivity extends AppCompatActivity {
             listView.setAdapter(myAdapter);
             if(dialog.isShowing())
                 dialog.dismiss();
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                }
+            });
         }
-
-
     }
-
-
     //AsyncTask class Code finished --------
+
+
+
+
 }

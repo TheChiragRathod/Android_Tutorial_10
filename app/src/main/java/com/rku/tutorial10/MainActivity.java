@@ -3,6 +3,7 @@ package com.rku.tutorial10;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
@@ -90,10 +92,21 @@ public class MainActivity extends AppCompatActivity {
             listView.setAdapter(myAdapter);
             if(dialog.isShowing())
                 dialog.dismiss();
+
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                {
+                    try {
+                        MyUtil.userJSONObj = itemjsonArray.getJSONObject(position);
+                        Intent intent = new Intent(MainActivity.this, UserData.class);
+                        startActivity(intent);
 
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
                 }
             });
         }

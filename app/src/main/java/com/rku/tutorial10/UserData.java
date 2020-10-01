@@ -35,6 +35,7 @@ public class UserData extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_data);
+        this.setTitle("User Data");
         Intent intent=getIntent();
 
         //TextView Initialization part start here...
